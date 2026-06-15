@@ -40,26 +40,30 @@ class BkashServiceProvider extends PackageServiceProvider
 
     protected function registerBkashHttpMacros(): void
     {
-        Http::macro('bkash', function () {
-            $isSandbox = core()->getConfigData('sales.payment_methods.bkash.bkash_sandbox') === '1';
-            $baseUrl = $isSandbox
+        $isSandbox = core()->getConfigData('sales.payment_methods.bkash.bkash_sandbox') === '1';
+        $baseUrl = $isSandbox
                 ? core()->getConfigData('sales.payment_methods.bkash.sandbox_base_url')
                 : core()->getConfigData('sales.payment_methods.bkash.live_base_url');
 
+        Http::macro('bkash', function () use ($baseUrl) {
             return Http::withHeaders([
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ])->baseUrl($baseUrl);
         });
 
-        Http::macro('bkashWithToken', function ($token, $appKey) {
-            $isSandbox = core()->getConfigData('sales.payment_methods.bkash.bkash_sandbox') === '1';
-            $baseUrl = $isSandbox
-                ? core()->getConfigData('sales.payment_methods.bkash.sandbox_base_url')
-                : core()->getConfigData('sales.payment_methods.bkash.live_base_url');
-
+        Http::macro('bkashWithToken', function ($token, $appKey) use ($baseUrl) {
             return Http::withHeaders([
                 'Authorization' => 'Bearer '.$token,
+                'X-APP-Key' => $appKey,
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ])->baseUrl($baseUrl);
+        });
+
+        Http::macro('bkashWithResponseToken', function ($token, $appKey) use ($baseUrl) {
+            return Http::withHeaders([
+                'Authorization' => $token,
                 'X-APP-Key' => $appKey,
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',

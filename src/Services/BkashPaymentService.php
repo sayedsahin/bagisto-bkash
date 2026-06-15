@@ -187,7 +187,7 @@ class BkashPaymentService
      */
     private function sendPaymentRequest(string $token, string $appKey, array $payload): array
     {
-        $response = Http::bkashWithToken($token, $appKey)
+        $response = Http::bkashWithResponseToken($token, $appKey)
             ->post('/tokenized/checkout/create', $payload);
 
         if (! $response->successful()) {
