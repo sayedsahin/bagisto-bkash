@@ -1,12 +1,12 @@
 {
-    "name": "theihasan/bagisto-bkash",
+    "name": "sayedsahin/bagisto-bkash",
     "description": "Seamless Bkash Transactions for Your Bagisto Store",
     "keywords": [
         "Ihasan",
         "laravel",
         "bagisto-bkash"
     ],
-    "homepage": "https://github.com/theihasan/bagisto-bkash",
+    "homepage": "https://github.com/sayedsahin/bagisto-bkash",
     "license": "MIT",
     "authors": [
         {
